@@ -17,6 +17,7 @@ import {
   CalendarIcon,
   UsersIcon,
 } from "@/lib/svg-icons"
+import { UserManagement } from "./user-management"
 
 const SimpleLineChart = ({
   data,
@@ -288,11 +289,12 @@ export function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="payments">Payments</TabsTrigger>
             <TabsTrigger value="events">Events</TabsTrigger>
             <TabsTrigger value="registrations">Registrations</TabsTrigger>
+            <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
 
@@ -569,6 +571,11 @@ export function AdminDashboard() {
                 </tbody>
               </table>
             </div>
+          </TabsContent>
+
+          {/* Users Tab */}
+          <TabsContent value="users" className="space-y-6">
+            <UserManagement />
           </TabsContent>
 
           {/* Analytics Tab */}
