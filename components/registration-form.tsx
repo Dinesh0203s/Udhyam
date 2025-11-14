@@ -297,7 +297,7 @@ export function RegistrationForm({ eventId }: RegistrationFormProps) {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Ticket ID</span>
                 <span className="font-semibold text-foreground">
-                  UDHYAM-{eventId}-{Date.now()}
+                  UDHAYAM-{eventId}-{Date.now()}
                 </span>
               </div>
               <div className="flex justify-between">

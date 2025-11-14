@@ -12,7 +12,7 @@ import { validateIndianMobile } from "@/lib/validation"
 const STEPS = [
   {
     id: 1,
-    title: "Welcome to UDHYAM",
+    title: "Welcome to UDHAYAM",
     description: "Let's get you set up",
     icon: Zap,
   },
@@ -298,7 +298,7 @@ function StepWelcome() {
   return (
     <div className="space-y-6 py-8">
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Welcome to UDHYAM</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Welcome to UDHAYAM</h2>
         <p className="text-muted-foreground">
           Join thousands of students participating in India's premier intercollege fest. Let's get you started!
         </p>

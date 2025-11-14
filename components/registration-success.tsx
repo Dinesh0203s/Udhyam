@@ -24,7 +24,7 @@ export function RegistrationSuccess({ eventId }: RegistrationSuccessProps) {
     return null
   }
 
-  const ticketId = `UDHYAM-${eventId}-${Date.now()}`
+  const ticketId = `UDHAYAM-${eventId}-${Date.now()}`
 
   return (
     <div className="py-12 px-4 md:px-8 lg:px-12">

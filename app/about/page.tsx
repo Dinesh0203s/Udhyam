@@ -4,13 +4,13 @@ import Link from "next/link"
 import { ArrowRightIcon, ZapIcon, TrophyIcon, UsersIcon, CalendarIcon } from "@/lib/svg-icons"
 
 export const metadata: Metadata = {
-  title: "About UDHYAM - Intercollege Fest",
-  description: "Learn about UDHYAM, the premier intercollege festival celebrating student talent and creativity",
+  title: "About UDHAYAM - Intercollege Fest",
+  description: "Learn about UDHAYAM, the premier intercollege festival celebrating student talent and creativity",
 }
 
 export default function AboutPage() {
   const milestones = [
-    { year: "2018", title: "Foundation", description: "UDHYAM was founded as a vision to celebrate student talent" },
+    { year: "2018", title: "Foundation", description: "UDHAYAM was founded as a vision to celebrate student talent" },
     { year: "2019", title: "First Festival", description: "Successfully hosted inaugural fest with 500+ participants" },
     { year: "2021", title: "Digital Transition", description: "Launched online registration and payment system" },
     { year: "2023", title: "Multi-City Expansion", description: "Expanded to 10+ colleges across the region" },
@@ -70,7 +70,7 @@ export default function AboutPage() {
         {/* Hero Section */}
         <section className="py-16 px-4 md:px-8 lg:px-12 bg-gradient-to-br from-blue-50 to-purple-50">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">About UDHYAM</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">About UDHAYAM</h1>
             <p className="text-lg text-muted-foreground mb-8">
               Celebrating student talent, creativity, and innovation through an annual intercollege fest
             </p>
@@ -98,7 +98,7 @@ export default function AboutPage() {
                 levels and backgrounds.
               </p>
               <p className="text-muted-foreground">
-                Through UDHYAM, we aim to provide equal opportunities for all students to compete, collaborate, and
+                Through UDHAYAM, we aim to provide equal opportunities for all students to compete, collaborate, and
                 celebrate their achievements.
               </p>
             </div>
@@ -108,7 +108,7 @@ export default function AboutPage() {
         {/* Features Grid */}
         <section className="py-16 px-4 md:px-8 lg:px-12 bg-muted">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Why Choose UDHYAM</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Why Choose UDHAYAM</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature, index) => {
                 const Icon = feature.icon
@@ -169,7 +169,7 @@ export default function AboutPage() {
         {/* CTA Section */}
         <section className="py-16 px-4 md:px-8 lg:px-12 bg-gradient-to-r from-blue-600 to-purple-600">
           <div className="max-w-4xl mx-auto text-center text-white">
-            <h2 className="text-3xl font-bold mb-4">Ready to Be Part of UDHYAM?</h2>
+            <h2 className="text-3xl font-bold mb-4">Ready to Be Part of UDHAYAM?</h2>
             <p className="text-lg mb-8 opacity-90">
               Join thousands of students in celebrating talent, creativity, and innovation
             </p>

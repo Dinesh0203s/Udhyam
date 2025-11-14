@@ -3,7 +3,7 @@ import { RegistrationSuccess } from "@/components/registration-success"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "Registration Successful - UDHYAM",
+  title: "Registration Successful - UDHAYAM",
   description: "Your registration has been confirmed",
 }
 

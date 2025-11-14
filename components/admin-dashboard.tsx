@@ -259,7 +259,7 @@ export function AdminDashboard() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-4xl font-bold text-foreground">Admin Dashboard</h1>
-            <p className="text-muted-foreground mt-1">Manage UDHYAM fest operations</p>
+            <p className="text-muted-foreground mt-1">Manage UDHAYAM fest operations</p>
           </div>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white gap-2 w-fit">
             <PlusIcon className="w-4 h-4" />

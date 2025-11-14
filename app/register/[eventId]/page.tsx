@@ -3,7 +3,7 @@ import { RegistrationForm } from "@/components/registration-form"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "Event Registration - UDHYAM",
+  title: "Event Registration - UDHAYAM",
   description: "Register for events",
 }
 

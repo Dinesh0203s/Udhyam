@@ -20,7 +20,7 @@ export function Dashboard() {
       category: "Technical",
       date: "15 Nov 2024",
       status: "Registered",
-      ticketId: "UDHYAM-2024-001",
+      ticketId: "UDHAYAM-2024-001",
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ export function Dashboard() {
       category: "Workshop",
       date: "14 Nov 2024",
       status: "Attended",
-      ticketId: "UDHYAM-2024-002",
+      ticketId: "UDHAYAM-2024-002",
     },
   ])
 

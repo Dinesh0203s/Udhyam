@@ -3,7 +3,7 @@ import { QRScanner } from "@/components/qr-scanner"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "QR Scanner - UDHYAM",
+  title: "QR Scanner - UDHAYAM",
   description: "Scan attendee QR codes for event check-in",
 }
 

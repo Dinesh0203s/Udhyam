@@ -17,7 +17,7 @@ export default function ContactPage() {
     {
       icon: MailIcon,
       title: "Email",
-      details: ["contact@udhyam.com", "support@udhyam.com"],
+      details: ["contact@udhayam.com", "support@udhayam.com"],
     },
     {
       icon: PhoneIcon,
@@ -58,7 +58,7 @@ export default function ContactPage() {
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Get In Touch</h1>
             <p className="text-lg text-muted-foreground">
-              Have questions about UDHYAM? We would love to hear from you. Send us a message and we will respond as soon
+              Have questions about UDHAYAM? We would love to hear from you. Send us a message and we will respond as soon
               as possible.
             </p>
           </div>
@@ -171,9 +171,9 @@ export default function ContactPage() {
             <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Frequently Asked Questions</h2>
             <div className="space-y-4">
               <Card className="p-6 border border-border">
-                <h3 className="font-semibold text-foreground mb-2">When is UDHYAM happening?</h3>
+                <h3 className="font-semibold text-foreground mb-2">When is UDHAYAM happening?</h3>
                 <p className="text-muted-foreground">
-                  UDHYAM is scheduled for November 14-16, 2024. Check our events page for detailed schedule.
+                  UDHAYAM is scheduled for November 14-16, 2024. Check our events page for detailed schedule.
                 </p>
               </Card>
               <Card className="p-6 border border-border">

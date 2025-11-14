@@ -3,7 +3,7 @@ import { AttendanceTracker } from "@/components/attendance-tracker"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "Attendance - UDHYAM",
+  title: "Attendance - UDHAYAM",
   description: "Event attendance tracking",
 }
 

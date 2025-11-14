@@ -3,7 +3,7 @@ import { ProfileSettings } from "@/components/profile-settings"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "Profile Settings - UDHYAM",
+  title: "Profile Settings - UDHAYAM",
   description: "Manage your profile",
 }
 

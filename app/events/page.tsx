@@ -4,8 +4,8 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 
 export const metadata: Metadata = {
-  title: "Events - UDHYAM",
-  description: "Browse and discover all events at UDHYAM",
+  title: "Events - UDHAYAM",
+  description: "Browse and discover all events at UDHAYAM",
 }
 
 export default function EventsPage() {

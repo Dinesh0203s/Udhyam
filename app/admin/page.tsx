@@ -3,7 +3,7 @@ import { AdminDashboard } from "@/components/admin-dashboard"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard - UDHYAM",
+  title: "Admin Dashboard - UDHAYAM",
   description: "Manage events, registrations, and participants",
 }
 

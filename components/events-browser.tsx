@@ -148,7 +148,7 @@ export function EventsBrowser() {
         {/* Header */}
         <div>
           <h1 className="text-4xl font-bold text-foreground mb-2">Explore Events</h1>
-          <p className="text-muted-foreground">Discover and register for amazing events at UDHYAM</p>
+          <p className="text-muted-foreground">Discover and register for amazing events at UDHAYAM</p>
         </div>
 
         {/* Search Bar */}

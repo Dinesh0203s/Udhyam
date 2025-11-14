@@ -12,8 +12,8 @@ const _geistMono = V0_Font_Geist_Mono({ subsets: ['latin'], weight: ["100","200"
 const _sourceSerif_4 = V0_Font_Source_Serif_4({ subsets: ['latin'], weight: ["200","300","400","500","600","700","800","900"] })
 
 export const metadata: Metadata = {
-  title: "UDHYAM - Intercollege Fest Management",
-  description: "Discover, participate, and celebrate at UDHYAM - India's premier intercollege fest platform",
+  title: "UDHAYAM - Intercollege Fest Management",
+  description: "Discover, participate, and celebrate at UDHAYAM - India's premier intercollege fest platform",
   generator: "v0.app",
   icons: {
     icon: [

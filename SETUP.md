@@ -28,13 +28,13 @@ This project uses Firebase Authentication for Google login and MongoDB for user 
 #### Option A: Local MongoDB
 1. Install MongoDB locally
 2. Start MongoDB service
-3. Use connection string: `mongodb://localhost:27017/udhyam`
+3. Use connection string: `mongodb://localhost:27017/udhayam`
 
 #### Option B: MongoDB Atlas (Cloud)
 1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 2. Create a free cluster
 3. Create a database user
-4. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/udhyam`
+4. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/udhayam`
 
 ### 3. Environment Variables
 
@@ -50,9 +50,9 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
 # MongoDB Connection String
-MONGODB_URI=mongodb://localhost:27017/udhyam
+MONGODB_URI=mongodb://localhost:27017/udhayam
 # Or for MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/udhyam
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/udhayam
 ```
 
 **Important:** 

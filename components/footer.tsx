@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="font-bold text-xl text-blue-600">UDHYAM</h3>
+            <h3 className="font-bold text-xl text-blue-600">UDHAYAM</h3>
             <p className="text-muted-foreground text-sm">India's premier intercollege fest management platform</p>
           </div>
 
@@ -63,7 +63,7 @@ export function Footer() {
             <h4 className="font-semibold text-foreground">Contact</h4>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2 text-muted-foreground">
-                <MailIcon /> support@udhyam.com
+                <MailIcon /> support@udhayam.com
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <PhoneIcon /> +91-XXXX-XXXX
@@ -77,7 +77,7 @@ export function Footer() {
 
         <div className="border-t border-border pt-8">
           <p className="text-center text-muted-foreground text-sm">
-            © {currentYear} UDHYAM. All rights reserved. Bringing colleges together through celebration.
+            © {currentYear} UDHAYAM. All rights reserved. Bringing colleges together through celebration.
           </p>
         </div>
       </div>

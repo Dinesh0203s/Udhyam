@@ -65,7 +65,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div className="space-y-2">
-              <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide">Welcome to UDHYAM</p>
+              <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide">Welcome to UDHAYAM</p>
               <h1 className="text-5xl md:text-6xl font-bold text-foreground text-balance">
                 Experience India's Premier Intercollege Fest
               </h1>
@@ -92,7 +92,7 @@ export default function LandingPage() {
             <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600">
               <img
                 src="/college-fest-celebration-diverse-students.jpg"
-                alt="UDHYAM Fest"
+                alt="UDHAYAM Fest"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -103,7 +103,7 @@ export default function LandingPage() {
       {/* Features Section */}
       <section className="py-20 px-4 md:px-8 lg:px-12 bg-card">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4 text-foreground">Why Choose UDHYAM?</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-foreground">Why Choose UDHAYAM?</h2>
           <p className="text-center text-muted-foreground mb-12 text-lg max-w-2xl mx-auto">
             Everything you need to discover, register, and participate in the best college events
           </p>
@@ -166,7 +166,7 @@ export default function LandingPage() {
             Ready to join India's biggest fest?
           </h2>
           <p className="text-xl text-blue-100 mb-8 text-balance">
-            Start your journey with UDHYAM today and be part of an amazing community
+            Start your journey with UDHAYAM today and be part of an amazing community
           </p>
           <Link href="/login">
             <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">

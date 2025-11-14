@@ -55,7 +55,7 @@ export function Navigation() {
         <div className="flex items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 font-bold text-2xl text-blue-600">
-            <span className="bg-blue-600 text-white rounded-lg px-3 py-1">UDHYAM</span>
+            <span className="bg-blue-600 text-white rounded-lg px-3 py-1">UDHAYAM</span>
           </Link>
 
           {/* Desktop Navigation - Centered */}

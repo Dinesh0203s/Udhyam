@@ -40,7 +40,7 @@ export function UserManagement() {
     {
       id: 1,
       name: "Rajesh Kumar",
-      email: "rajesh@udhyam.com",
+      email: "rajesh@udhayam.com",
       phone: "+91 9876543210",
       role: "superadmin",
       status: "active",
@@ -49,7 +49,7 @@ export function UserManagement() {
     {
       id: 2,
       name: "Priya Singh",
-      email: "priya@udhyam.com",
+      email: "priya@udhayam.com",
       phone: "+91 9876543211",
       role: "admin",
       status: "active",
@@ -58,7 +58,7 @@ export function UserManagement() {
     {
       id: 3,
       name: "Amit Patel",
-      email: "amit@udhyam.com",
+      email: "amit@udhayam.com",
       phone: "+91 9876543212",
       role: "event_admin",
       department: "Technical",
@@ -68,7 +68,7 @@ export function UserManagement() {
     {
       id: 4,
       name: "Neha Gupta",
-      email: "neha@udhyam.com",
+      email: "neha@udhayam.com",
       phone: "+91 9876543213",
       role: "event_admin",
       department: "Cultural",
@@ -78,7 +78,7 @@ export function UserManagement() {
     {
       id: 5,
       name: "Vikram Sharma",
-      email: "vikram@udhyam.com",
+      email: "vikram@udhayam.com",
       phone: "+91 9876543214",
       role: "volunteer",
       department: "Sports",
@@ -88,7 +88,7 @@ export function UserManagement() {
     {
       id: 6,
       name: "Ananya Das",
-      email: "ananya@udhyam.com",
+      email: "ananya@udhayam.com",
       phone: "+91 9876543215",
       role: "volunteer",
       department: "Logistics",

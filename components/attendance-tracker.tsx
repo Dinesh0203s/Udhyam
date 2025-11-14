@@ -38,7 +38,7 @@ export function AttendanceTracker({ eventId }: AttendanceTrackerProps) {
       email: "aditya@college.edu",
       checkInTime: "08:45 AM",
       status: "present",
-      ticketId: "UDHYAM-1-001",
+      ticketId: "UDHAYAM-1-001",
     },
     {
       id: 2,
@@ -46,7 +46,7 @@ export function AttendanceTracker({ eventId }: AttendanceTrackerProps) {
       email: "priya@college.edu",
       checkInTime: "09:15 AM",
       status: "late",
-      ticketId: "UDHYAM-1-002",
+      ticketId: "UDHAYAM-1-002",
     },
     {
       id: 3,
@@ -54,7 +54,7 @@ export function AttendanceTracker({ eventId }: AttendanceTrackerProps) {
       email: "rahul@college.edu",
       checkInTime: "08:50 AM",
       status: "present",
-      ticketId: "UDHYAM-1-003",
+      ticketId: "UDHAYAM-1-003",
     },
     {
       id: 4,
@@ -62,7 +62,7 @@ export function AttendanceTracker({ eventId }: AttendanceTrackerProps) {
       email: "neha@college.edu",
       checkInTime: "-",
       status: "pending",
-      ticketId: "UDHYAM-1-004",
+      ticketId: "UDHAYAM-1-004",
     },
     {
       id: 5,
@@ -70,7 +70,7 @@ export function AttendanceTracker({ eventId }: AttendanceTrackerProps) {
       email: "vikram@college.edu",
       checkInTime: "09:00 AM",
       status: "present",
-      ticketId: "UDHYAM-1-005",
+      ticketId: "UDHAYAM-1-005",
     },
   ]
 

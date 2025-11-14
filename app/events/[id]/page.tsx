@@ -4,7 +4,7 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 
 export const metadata: Metadata = {
-  title: "Event Details - UDHYAM",
+  title: "Event Details - UDHAYAM",
   description: "Event details and registration",
 }
 
