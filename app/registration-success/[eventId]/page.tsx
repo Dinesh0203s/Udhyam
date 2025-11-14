@@ -7,11 +7,13 @@ export const metadata: Metadata = {
   description: "Your registration has been confirmed",
 }
 
-export default function RegistrationSuccessPage({ params }: { params: { eventId: string } }) {
+export default async function RegistrationSuccessPage({ params }: { params: Promise<{ eventId: string }> }) {
+  const { eventId } = await params
+  
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <RegistrationSuccess eventId={params.eventId} />
+      <RegistrationSuccess eventId={eventId} />
     </div>
   )
 }

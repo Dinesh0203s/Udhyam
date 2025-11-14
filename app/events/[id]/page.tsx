@@ -8,11 +8,13 @@ export const metadata: Metadata = {
   description: "Event details and registration",
 }
 
-export default function EventDetailsPage({ params }: { params: { id: string } }) {
+export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
-      <EventDetails eventId={params.id} />
+      <EventDetails eventId={id} />
       <Footer />
     </div>
   )

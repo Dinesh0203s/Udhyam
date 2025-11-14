@@ -7,11 +7,13 @@ export const metadata: Metadata = {
   description: "Event attendance tracking",
 }
 
-export default function AttendancePage({ params }: { params: { eventId: string } }) {
+export default async function AttendancePage({ params }: { params: Promise<{ eventId: string }> }) {
+  const { eventId } = await params
+  
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <AttendanceTracker eventId={params.eventId} />
+      <AttendanceTracker eventId={eventId} />
     </div>
   )
 }

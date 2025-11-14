@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -18,6 +18,8 @@ import {
   UsersIcon,
 } from "@/lib/svg-icons"
 import { UserManagement } from "./user-management"
+import { EventForm } from "./event-form"
+import type { IEvent } from "@/models/Event"
 
 const SimpleLineChart = ({
   data,
@@ -134,17 +136,25 @@ const SimplePieChart = ({ data, size = 120 }: { data: Array<{ name: string; valu
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
   const [searchTerm, setSearchTerm] = useState("")
+  const [eventSearchTerm, setEventSearchTerm] = useState("")
+  const [events, setEvents] = useState<IEvent[]>([])
+  const [loading, setLoading] = useState(true)
+  const [showEventForm, setShowEventForm] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState<IEvent | null>(null)
+
+  const totalRegistrations = events.reduce((sum, event) => sum + (event.participants || 0), 0)
+  const totalRevenue = events.reduce((sum, event) => sum + (event.fee || 0) * (event.participants || 0), 0)
 
   const stats = [
-    { label: "Total Events", value: "8", icon: CalendarIcon, color: "text-blue-600", bgColor: "bg-blue-50" },
+    { label: "Total Events", value: events.length.toString(), icon: CalendarIcon, color: "text-blue-600", bgColor: "bg-blue-50" },
     {
       label: "Total Registrations",
-      value: "1,245",
+      value: totalRegistrations.toLocaleString(),
       icon: UsersIcon,
       color: "text-purple-600",
       bgColor: "bg-purple-50",
     },
-    { label: "Total Revenue", value: "₹95,000", icon: DollarIcon, color: "text-green-600", bgColor: "bg-green-50" },
+    { label: "Total Revenue", value: `₹${totalRevenue.toLocaleString()}`, icon: DollarIcon, color: "text-green-600", bgColor: "bg-green-50" },
     { label: "Growth", value: "+28%", icon: TrendingUpIcon, color: "text-orange-600", bgColor: "bg-orange-50" },
   ]
 
@@ -180,14 +190,65 @@ export function AdminDashboard() {
     { name: "Others", value: 541 },
   ]
 
-  // Events Data
-  const events = [
-    { id: 1, name: "Tech Hackathon", date: "15 Nov", status: "Active", registrations: 256, capacity: 500 },
-    { id: 2, name: "Dance Battle", date: "16 Nov", status: "Active", registrations: 128, capacity: 200 },
-    { id: 3, name: "Cricket Tournament", date: "17 Nov", status: "Active", registrations: 320, capacity: 400 },
-    { id: 4, name: "Photography Workshop", date: "14 Nov", status: "Completed", registrations: 45, capacity: 50 },
-    { id: 5, name: "Debate Championship", date: "18 Nov", status: "Scheduled", registrations: 89, capacity: 150 },
-  ]
+  // Fetch events from API
+  const fetchEvents = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch("/api/events")
+      const data = await response.json()
+      if (data.success) {
+        setEvents(data.data)
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchEvents()
+  }, [])
+
+  const handleCreateEvent = () => {
+    setSelectedEvent(null)
+    setShowEventForm(true)
+  }
+
+  const handleEditEvent = (event: IEvent) => {
+    setSelectedEvent(event)
+    setShowEventForm(true)
+  }
+
+  const handleDeleteEvent = async (eventId: string) => {
+    if (!confirm("Are you sure you want to delete this event? This action cannot be undone.")) {
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/events/${eventId}`, {
+        method: "DELETE",
+      })
+      const data = await response.json()
+      if (data.success) {
+        fetchEvents()
+      } else {
+        alert(data.error || "Failed to delete event")
+      }
+    } catch (error) {
+      console.error("Error deleting event:", error)
+      alert("Failed to delete event")
+    }
+  }
+
+  const handleEventFormSuccess = () => {
+    fetchEvents()
+  }
+
+  const filteredEvents = events.filter((event) =>
+    event.name.toLowerCase().includes(eventSearchTerm.toLowerCase()) ||
+    event.description?.toLowerCase().includes(eventSearchTerm.toLowerCase())
+  )
 
   const recentRegistrations = [
     {
@@ -261,7 +322,7 @@ export function AdminDashboard() {
             <h1 className="text-4xl font-bold text-foreground">Admin Dashboard</h1>
             <p className="text-muted-foreground mt-1">Manage UDHAYAM fest operations</p>
           </div>
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white gap-2 w-fit">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white gap-2 w-fit" onClick={handleCreateEvent}>
             <PlusIcon className="w-4 h-4" />
             Create Event
           </Button>
@@ -292,7 +353,7 @@ export function AdminDashboard() {
           <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="payments">Payments</TabsTrigger>
-            <TabsTrigger value="events">Events</TabsTrigger>
+            <TabsTrigger value="events">Event Management</TabsTrigger>
             <TabsTrigger value="registrations">Registrations</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
@@ -478,46 +539,79 @@ export function AdminDashboard() {
             <div className="flex flex-col sm:flex-row gap-3 mb-4">
               <div className="flex-1 relative">
                 <SearchIcon className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                <Input placeholder="Search events..." className="pl-10" />
+                <Input
+                  placeholder="Search events..."
+                  className="pl-10"
+                  value={eventSearchTerm}
+                  onChange={(e) => setEventSearchTerm(e.target.value)}
+                />
               </div>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">Create Event</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={handleCreateEvent}>
+                Create Event
+              </Button>
             </div>
-            <div className="space-y-3">
-              {events.map((event) => (
-                <Card key={event.id} className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground">{event.name}</h4>
-                      <div className="flex gap-4 mt-2 text-sm text-muted-foreground">
-                        <span>{event.date}</span>
-                        <span>
-                          {event.registrations}/{event.capacity} registrations
-                        </span>
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            event.status === "Active"
-                              ? "bg-green-50 text-green-600"
-                              : event.status === "Completed"
-                                ? "bg-blue-50 text-blue-600"
-                                : "bg-gray-50 text-gray-600"
-                          }`}
+            {loading ? (
+              <div className="text-center py-8 text-muted-foreground">Loading events...</div>
+            ) : filteredEvents.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                {eventSearchTerm ? "No events found matching your search." : "No events yet. Create your first event!"}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredEvents.map((event) => (
+                  <Card key={event._id.toString()} className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-semibold text-foreground">{event.name}</h4>
+                          <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-600">
+                            {event.category}
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-xs font-medium bg-purple-50 text-purple-600">
+                            {event.participationType || "Solo"}
+                            {event.participationType === "Team" && event.minTeamMembers && event.maxTeamMembers
+                              ? ` (${event.minTeamMembers}-${event.maxTeamMembers})`
+                              : ""}
+                          </span>
+                        </div>
+                        <div className="flex gap-4 mt-2 text-sm text-muted-foreground">
+                          <span>{event.date}</span>
+                          <span>
+                            {event.participants || 0}/{event.capacity} registrations
+                          </span>
+                          <span>₹{event.fee || 0}</span>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                              event.status === "Active"
+                                ? "bg-green-50 text-green-600"
+                                : event.status === "Completed"
+                                  ? "bg-blue-50 text-blue-600"
+                                  : event.status === "Cancelled"
+                                    ? "bg-red-50 text-red-600"
+                                    : "bg-gray-50 text-gray-600"
+                            }`}
+                          >
+                            {event.status}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" onClick={() => handleEditEvent(event)}>
+                          <EditIcon className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDeleteEvent(event._id.toString())}
                         >
-                          {event.status}
-                        </span>
+                          <TrashIcon className="w-4 h-4 text-red-600" />
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
-                        <EditIcon className="w-4 h-4" />
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <TrashIcon className="w-4 h-4 text-red-600" />
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+                  </Card>
+                ))}
+              </div>
+            )}
           </TabsContent>
 
           {/* Registrations Tab */}
@@ -598,9 +692,9 @@ export function AdminDashboard() {
                 <h3 className="text-lg font-bold text-foreground mb-4">Participation Rate</h3>
                 <div className="space-y-4">
                   {events.slice(0, 3).map((event) => {
-                    const rate = Math.round((event.registrations / event.capacity) * 100)
+                    const rate = event.capacity > 0 ? Math.round(((event.participants || 0) / event.capacity) * 100) : 0
                     return (
-                      <div key={event.id}>
+                      <div key={event._id.toString()}>
                         <div className="flex justify-between mb-2">
                           <span className="text-sm font-medium text-foreground">{event.name}</span>
                           <span className="text-sm font-semibold text-blue-600">{rate}%</span>
@@ -635,6 +729,18 @@ export function AdminDashboard() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Event Form Modal */}
+      {showEventForm && (
+        <EventForm
+          event={selectedEvent}
+          onClose={() => {
+            setShowEventForm(false)
+            setSelectedEvent(null)
+          }}
+          onSuccess={handleEventFormSuccess}
+        />
+      )}
     </div>
   )
 }

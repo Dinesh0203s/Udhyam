@@ -7,12 +7,14 @@ export const metadata: Metadata = {
   description: "Register for events",
 }
 
-export default function RegistrationPage({ params }: { params: { eventId: string } }) {
+export default async function RegistrationPage({ params }: { params: Promise<{ eventId: string }> }) {
+  const { eventId } = await params
+  
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="flex-1 py-12 px-4 md:px-8 lg:px-12">
-        <RegistrationForm eventId={params.eventId} />
+        <RegistrationForm eventId={eventId} />
       </main>
     </div>
   )
