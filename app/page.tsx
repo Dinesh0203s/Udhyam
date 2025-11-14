@@ -75,7 +75,7 @@ export default function LandingPage() {
               cultural, technical, and sports competitions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="/onboarding">
+              <Link href="/login">
                 <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white">
                   Get Started
                   <ArrowRightIcon className="w-4 h-4 ml-2" />
@@ -168,7 +168,7 @@ export default function LandingPage() {
           <p className="text-xl text-blue-100 mb-8 text-balance">
             Start your journey with UDHYAM today and be part of an amazing community
           </p>
-          <Link href="/onboarding">
+          <Link href="/login">
             <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
               Create Your Profile
               <ArrowRightIcon className="w-4 h-4 ml-2" />

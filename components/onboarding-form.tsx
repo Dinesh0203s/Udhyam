@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { CheckCircle2, User, Smartphone, BookOpen, Zap } from "lucide-react"
+import { CheckCircle2, User, Smartphone, BookOpen, Zap, Loader2 } from "lucide-react"
+import { useAuth } from "@/contexts/AuthContext"
+import { validateIndianMobile } from "@/lib/validation"
 
 const STEPS = [
   {
@@ -52,7 +54,10 @@ interface FormData {
 
 export function OnboardingForm() {
   const router = useRouter()
+  const { user, userData, loading, refreshUserData } = useAuth()
   const [step, setStep] = useState(1)
+  const [submitting, setSubmitting] = useState(false)
+  const [mobileError, setMobileError] = useState<string | null>(null)
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     email: "",
@@ -63,7 +68,48 @@ export function OnboardingForm() {
     mobile: "",
   })
 
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login")
+    } else if (!loading && user && userData?.isOnboarded) {
+      router.push("/dashboard")
+    } else if (user) {
+      // Pre-fill form with existing data if available, or use Firebase user data
+      setFormData({
+        fullName: userData?.fullName || user.displayName || "",
+        email: userData?.email || user.email || "",
+        collegeCode: userData?.collegeCode || "",
+        collegeName: userData?.collegeName || "",
+        department: userData?.department || "",
+        year: userData?.year || "",
+        mobile: userData?.mobile || "",
+      })
+    }
+  }, [user, userData, loading, router])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      </div>
+    )
+  }
+
+  if (!user) {
+    return null
+  }
+
   const handleNext = () => {
+    // Validate mobile number before proceeding from step 4
+    if (step === 4) {
+      const validation = validateIndianMobile(formData.mobile)
+      if (!validation.isValid) {
+        setMobileError(validation.error || "Invalid mobile number")
+        return
+      }
+      setMobileError(null)
+    }
+
     if (step < STEPS.length) {
       setStep(step + 1)
     }
@@ -79,10 +125,50 @@ export function OnboardingForm() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = () => {
-    // Save to localStorage for demo purposes
-    localStorage.setItem("udhyamUser", JSON.stringify(formData))
-    router.push("/dashboard")
+  const handleSubmit = async () => {
+    if (!user) return
+
+    // Validate mobile number before submitting
+    const validation = validateIndianMobile(formData.mobile)
+    if (!validation.isValid) {
+      setMobileError(validation.error || "Invalid mobile number")
+      setStep(4) // Go back to mobile number step
+      return
+    }
+
+    setSubmitting(true)
+    setMobileError(null)
+    try {
+      const response = await fetch("/api/users/onboard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firebaseUID: user.uid,
+          fullName: formData.fullName,
+          collegeCode: formData.collegeCode,
+          collegeName: formData.collegeName,
+          department: formData.department,
+          year: formData.year,
+          mobile: formData.mobile,
+        }),
+      })
+
+      if (response.ok) {
+        await refreshUserData()
+        router.push("/dashboard")
+      } else {
+        const error = await response.json()
+        console.error("Error onboarding:", error)
+        alert("Failed to complete onboarding. Please try again.")
+      }
+    } catch (error) {
+      console.error("Error submitting onboarding:", error)
+      alert("An error occurred. Please try again.")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const isStepComplete = (stepId: number): boolean => {
@@ -94,7 +180,8 @@ export function OnboardingForm() {
       case 3:
         return formData.collegeName.trim() !== "" && formData.department.trim() !== "" && formData.year !== ""
       case 4:
-        return formData.mobile.trim() !== ""
+        const validation = validateIndianMobile(formData.mobile)
+        return validation.isValid
       case 5:
         return true
       default:
@@ -162,7 +249,14 @@ export function OnboardingForm() {
         {step === 1 && <StepWelcome />}
         {step === 2 && <StepPersonalDetails data={formData} onChange={handleInputChange} />}
         {step === 3 && <StepAcademicInfo data={formData} onChange={handleInputChange} />}
-        {step === 4 && <StepContactDetails data={formData} onChange={handleInputChange} />}
+        {step === 4 && (
+          <StepContactDetails
+            data={formData}
+            onChange={handleInputChange}
+            mobileError={mobileError}
+            onMobileErrorChange={setMobileError}
+          />
+        )}
         {step === 5 && <StepConfirmation data={formData} />}
 
         {/* Navigation Buttons */}
@@ -173,10 +267,17 @@ export function OnboardingForm() {
           {step === STEPS.length ? (
             <Button
               onClick={handleSubmit}
-              disabled={!canProceed}
+              disabled={!canProceed || submitting}
               className="flex-1 bg-green-600 hover:bg-green-700 text-white"
             >
-              Complete Setup
+              {submitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Complete Setup"
+              )}
             </Button>
           ) : (
             <Button
@@ -234,6 +335,8 @@ function StepWelcome() {
 interface StepProps {
   data: FormData
   onChange: (field: keyof FormData, value: string) => void
+  mobileError?: string | null
+  onMobileErrorChange?: (error: string | null) => void
 }
 
 function StepPersonalDetails({ data, onChange }: StepProps) {
@@ -261,7 +364,9 @@ function StepPersonalDetails({ data, onChange }: StepProps) {
             value={data.email}
             onChange={(e) => onChange("email", e.target.value)}
             className="w-full"
+            disabled
           />
+          <p className="text-xs text-muted-foreground mt-1">Email is set from your Google account</p>
         </div>
       </div>
     </div>
@@ -331,7 +436,31 @@ function StepAcademicInfo({ data, onChange }: StepProps) {
   )
 }
 
-function StepContactDetails({ data, onChange }: StepProps) {
+function StepContactDetails({ data, onChange, mobileError, onMobileErrorChange }: StepProps) {
+  const [localMobileError, setLocalMobileError] = useState<string | null>(null)
+  const displayError = mobileError || localMobileError
+
+  const handleMobileChange = (value: string) => {
+    // Only allow digits and limit to 10
+    const cleaned = value.replace(/\D/g, "").slice(0, 10)
+    onChange("mobile", cleaned)
+
+    // Validate on change (but only show error after user has typed something)
+    if (cleaned.length > 0) {
+      const validation = validateIndianMobile(cleaned)
+      const error = validation.isValid ? null : validation.error || null
+      setLocalMobileError(error)
+      if (onMobileErrorChange) {
+        onMobileErrorChange(error)
+      }
+    } else {
+      setLocalMobileError(null)
+      if (onMobileErrorChange) {
+        onMobileErrorChange(null)
+      }
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -343,13 +472,22 @@ function StepContactDetails({ data, onChange }: StepProps) {
           <label className="block text-sm font-medium text-foreground mb-2">Mobile Number</label>
           <div className="flex gap-2">
             <div className="px-3 py-2 bg-muted rounded-lg text-muted-foreground font-medium">+91</div>
-            <Input
-              placeholder="10-digit mobile number"
-              value={data.mobile}
-              onChange={(e) => onChange("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))}
-              maxLength={10}
-              className="flex-1"
-            />
+            <div className="flex-1">
+              <Input
+                placeholder="10-digit mobile number"
+                value={data.mobile}
+                onChange={(e) => handleMobileChange(e.target.value)}
+                maxLength={10}
+                className={displayError ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}
+                type="tel"
+              />
+              {displayError && (
+                <p className="text-xs text-red-600 mt-1">{displayError}</p>
+              )}
+              {!displayError && data.mobile.length === 10 && (
+                <p className="text-xs text-green-600 mt-1">✓ Valid mobile number</p>
+              )}
+            </div>
           </div>
           <p className="text-xs text-muted-foreground mt-2">Used for event updates and verification</p>
         </div>

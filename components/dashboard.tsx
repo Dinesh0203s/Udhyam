@@ -1,26 +1,17 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Settings, LogOut, Ticket, Heart, Trophy, Bell, Calendar } from "lucide-react"
-
-interface UserData {
-  fullName: string
-  email: string
-  collegeCode: string
-  collegeName: string
-  department: string
-  year: string
-  mobile: string
-}
+import { useAuth } from "@/contexts/AuthContext"
 
 export function Dashboard() {
   const router = useRouter()
-  const [user, setUser] = useState<UserData | null>(null)
+  const { userData, logout } = useAuth()
   const [activeTab, setActiveTab] = useState("overview")
   const [registeredEvents, setRegisteredEvents] = useState([
     {
@@ -56,21 +47,16 @@ export function Dashboard() {
     },
   ])
 
-  useEffect(() => {
-    const userDataStr = localStorage.getItem("udhyamUser")
-    if (userDataStr) {
-      setUser(JSON.parse(userDataStr))
-    } else {
-      router.push("/onboarding")
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push("/")
+    } catch (error) {
+      console.error("Logout error:", error)
     }
-  }, [router])
-
-  const handleLogout = () => {
-    localStorage.removeItem("udhyamUser")
-    router.push("/")
   }
 
-  if (!user) {
+  if (!userData) {
     return null
   }
 
@@ -87,9 +73,9 @@ export function Dashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-foreground">Welcome, {user.fullName}!</h1>
+            <h1 className="text-4xl font-bold text-foreground">Welcome, {userData.fullName || userData.displayName || "User"}!</h1>
             <p className="text-muted-foreground mt-2">
-              {user.collegeName} • {user.department}
+              {userData.collegeName} • {userData.department}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -238,11 +224,11 @@ export function Dashboard() {
                       <div className="flex gap-6">
                         <div>
                           <p className="text-sm opacity-90">Name</p>
-                          <p className="font-semibold">{user.fullName}</p>
+                          <p className="font-semibold">{userData.fullName || userData.displayName || "User"}</p>
                         </div>
                         <div>
                           <p className="text-sm opacity-90">College</p>
-                          <p className="font-semibold">{user.collegeName}</p>
+                          <p className="font-semibold">{userData.collegeName}</p>
                         </div>
                       </div>
                     </div>
