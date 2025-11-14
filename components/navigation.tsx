@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { MenuIcon, CloseIcon } from "@/lib/svg-icons"
@@ -54,8 +55,15 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
         <div className="flex items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-bold text-2xl text-blue-600">
-            <span className="bg-blue-600 text-white rounded-lg px-3 py-1">UDHAYAM</span>
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+              src="/logo.avif" 
+              alt="UDHAYAM Logo" 
+              width={200} 
+              height={60} 
+              className="h-14 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation - Centered */}
